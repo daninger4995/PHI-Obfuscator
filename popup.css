@@ -1,0 +1,222 @@
+/* Redact-on-Record popup styles */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #1a1a2e;
+  --surface:  #16213e;
+  --border:   #0f3460;
+  --accent:   #e94560;
+  --text:     #e0e0e0;
+  --muted:    #8888aa;
+  --radius:   6px;
+  --toggle-w: 40px;
+  --toggle-h: 22px;
+}
+
+html { font-size: 13px; }
+
+body {
+  width: 320px;
+  min-height: 100px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.4;
+}
+
+/* ── Header ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo { display: flex; align-items: center; gap: 7px; }
+.logo-icon { color: var(--accent); font-size: 16px; }
+.logo-text { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+
+/* ── Master toggle ── */
+.toggle-wrap {
+  position: relative;
+  display: inline-block;
+  width: var(--toggle-w);
+  height: var(--toggle-h);
+  cursor: pointer;
+}
+.toggle-wrap input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #444;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: calc(var(--toggle-h) - 4px);
+  height: calc(var(--toggle-h) - 4px);
+  left: 2px;
+  top: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.toggle-wrap input:checked + .toggle-slider { background: var(--accent); }
+.toggle-wrap input:checked + .toggle-slider::before {
+  transform: translateX(calc(var(--toggle-w) - var(--toggle-h)));
+}
+
+/* ── Main content ── */
+#mainContent { padding: 8px 0; }
+
+.section {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.section-title {
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 5px;
+  display: block;
+}
+.section-header .section-title { margin-bottom: 0; }
+.section-hint {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ── Panic section ── */
+.panic-section { background: rgba(233,69,96,0.07); }
+.panic-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.panic-text { font-size: 12px; font-weight: 600; color: var(--accent); }
+
+/* ── Field hint (sub-label below a section header) ── */
+.field-hint {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+/* ── Textareas ── */
+textarea {
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  font-size: 12px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+textarea:focus { border-color: var(--accent); }
+
+/* ── Inline label ── */
+.inline-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ── Preset grid ── */
+.preset-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.preset-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+}
+
+/* ── Radio group ── */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+}
+
+/* ── Blur row ── */
+.blur-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.blur-row input[type=range] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+/* ── Checkbox / Radio base ── */
+input[type=checkbox],
+input[type=radio] {
+  accent-color: var(--accent);
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+
+/* ── Footer ── */
+.footer-hint {
+  padding: 7px 14px;
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+}
+kbd {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-size: 10px;
+  font-family: monospace;
+}

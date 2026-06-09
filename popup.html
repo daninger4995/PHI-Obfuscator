@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Redact-on-Record</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="logo-icon">&#9632;</span>
+      <span class="logo-text">Redact-on-Record</span>
+    </div>
+    <label class="toggle-wrap" title="Master on/off (Alt+Shift+R)">
+      <input type="checkbox" id="masterToggle" />
+      <span class="toggle-slider"></span>
+    </label>
+  </header>
+
+  <div id="mainContent">
+
+    <!-- Panic Blur -->
+    <section class="section panic-section">
+      <label class="panic-label">
+        <input type="checkbox" id="panicBlur" />
+        <span class="panic-text">Panic Blur (blur entire page instantly)</span>
+      </label>
+    </section>
+
+    <!-- Domain Allowlist -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-title">Domain Allowlist</span>
+        <span class="section-hint">Leave blank to redact on all sites</span>
+      </div>
+      <textarea id="allowedHosts" rows="2" placeholder="e.g. ehr.myhospital.org&#10;app.epic.com"></textarea>
+    </section>
+
+    <!-- Term List -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-title">Exact Terms</span>
+        <label class="inline-label">
+          <input type="checkbox" id="wholeWord" />
+          Whole word only
+        </label>
+      </div>
+      <textarea id="termList" rows="5" placeholder="One term per line&#10;e.g. John Smith&#10;123-456-7890"></textarea>
+    </section>
+
+    <!-- Regex Presets -->
+    <section class="section">
+      <div class="section-title">Regex Presets</div>
+      <div class="preset-grid">
+        <label class="preset-item">
+          <input type="checkbox" id="presetSSN" data-preset="ssn" />
+          <span>US SSN</span>
+        </label>
+        <label class="preset-item">
+          <input type="checkbox" id="presetPhone" data-preset="phone" />
+          <span>Phone Numbers</span>
+        </label>
+        <label class="preset-item">
+          <input type="checkbox" id="presetEmail" data-preset="email" />
+          <span>Email Addresses</span>
+        </label>
+        <label class="preset-item">
+          <input type="checkbox" id="presetDate" data-preset="date" />
+          <span>Dates</span>
+        </label>
+        <label class="preset-item">
+          <input type="checkbox" id="presetDigits" data-preset="digits" />
+          <span>Long Digit Runs (MRN, 6+ digits)</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- CSS Pre-Blur -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-title">CSS Pre-Blur</span>
+        <label class="inline-label">
+          <input type="checkbox" id="cssPreBlur" />
+          Enable
+        </label>
+      </div>
+      <span class="field-hint">CSS selectors for known PHI fields — blurred at paint time, before JS runs</span>
+      <textarea id="cssSelectors" rows="3" placeholder=".patient-name&#10;[data-field=&quot;mrn&quot;]&#10;#header-dob"></textarea>
+    </section>
+
+    <!-- Redaction Style -->
+    <section class="section">
+      <div class="section-title">Redaction Style</div>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="redactMode" value="solid" id="modeSolid" />
+          <span>Solid Block (safest)</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="redactMode" value="blur" id="modeBlur" />
+          <span>CSS Blur</span>
+        </label>
+      </div>
+      <div id="blurRow" class="blur-row hidden">
+        <label for="blurRadius">Blur radius: <span id="blurVal">10</span>px</label>
+        <input type="range" id="blurRadius" min="4" max="40" step="1" value="10" />
+      </div>
+    </section>
+
+    <div class="footer-hint">Shortcut: <kbd>Alt+Shift+R</kbd></div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
